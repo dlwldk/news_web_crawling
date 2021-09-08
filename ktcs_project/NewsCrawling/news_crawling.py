@@ -107,9 +107,7 @@ for current_date in dates:
            
             for keyword in keywords:
                 cur.execute("INSERT INTO news_category (news_date, serial_num, category, keyword, keyword_count) VALUES(%s, %s, %s, %s, %s)", (current_date, news_serialNum, category, keyword['keyword'], keyword['count'])) # news_category 테이블에 삽입
-            
-            
-             
+
             conn.commit()
 
 cur.close()
