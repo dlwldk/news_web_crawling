@@ -124,6 +124,7 @@ for current_date in dates:
 # cur.fetchone()은 1줄만
 cur.close()
 conn.close()
+#dga;lfasd
 
             
                 
