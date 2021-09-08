@@ -73,6 +73,7 @@ for current_date in dates:
             present_html = bs(present_res.text, 'html.parser')
             present_head = present_html.find('div', {'class' : 'head_view'})
             headline = present_head.find('h3', {'class' : 'tit_view'}).text # 뉴스 제목
+
             try:
                 categories = present_html.find('div', {'class' : 'inner_gnb'}).ul
                 present_category = categories['data-category'] # 뉴스 카테고리
@@ -84,44 +85,33 @@ for current_date in dates:
             content = present_contents.find('div', {'id' : 'harmonyContainer'}).get_text() #뉴스 내용
             news_serialNum_split = present_url.split('/') # url로부터 일련번호를 뽑기 위한 뉴스 링크 파싱
             news_serialNum = news_serialNum_split[-1] #뉴스 일련번호
-            #print(present_url) # 뉴스 링크
-            #print(news_serialNum) # 뉴스 일련번호
-            #print(current_date)
-            #print(press) # 언론사명
-            #print(headline) # 뉴스 제목
-            #print(present_category) # 뉴스 카테고리
-            #print(input_date)  # 입력 날짜
+            
             try: # 부제목은 없는 경우(None) 경우도 있기 때문에 try-catch
                 is_subtitle = present_body.find('strong', {'class' : 'summary_view'}).text # 부제목
                 subtitle = is_subtitle # 부제목
             except Exception as e:
                 subtitle = None 
             
-            #print(content) # 뉴스 내용
+           
             category = ''
             if present_category != 'society' and present_category != 'politics' and present_category != 'economic' and present_category != 'culture' and present_category != 'digital': # 이 외의 카테고리는 '기타'로 처리
                 category = 'etc'
             else:
                 category = present_category
-            #print(category)
+           
             cur.execute("INSERT INTO news_list (news_date, serial_num, link) VALUES(%s, %s, %s)", (current_date, news_serialNum, present_url)) # news_list 테이블에 삽입
             cur.execute("INSERT INTO news (news_date, serial_num, title, input_date, subtitle, press_agency) VALUES(%s, %s, %s, %s, %s, %s)", (current_date, news_serialNum, headline, input_date, subtitle, press)) # news 테이블에 삽입
 
             text = headline + content
             keywords = get_tags(text, ntags= 10) # 상위 10개 키워드 리스트
-            #print(keywords)
+           
             for keyword in keywords:
                 cur.execute("INSERT INTO news_category (news_date, serial_num, category, keyword, keyword_count) VALUES(%s, %s, %s, %s, %s)", (current_date, news_serialNum, category, keyword['keyword'], keyword['count'])) # news_category 테이블에 삽입
             
-            #cur.execute("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_CATALOG = 'postgres' AND TABLE_NAME    = 'date_news' ORDER BY ORDINAL_POSITION;")
+            
              
             conn.commit()
 
-
-# cur.execute("SELECT * FROM news;")
-# for raw in cur.fetchall(): # cur.fechall()은 리스트형태
-#     print(raw)
-# cur.fetchone()은 1줄만
 cur.close()
 conn.close()
             
