@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect(host='localhost', dbname='postgres', user='postgres', password='dlxown0112!', port=5432)
+conn = psycopg2.connect(host='localhost', dbname='postgres', user='아이디', password='비밀번호', port=5432)
 cur = conn.cursor()
 
 cur.execute("CREATE TYPE categories AS ENUM ('society', 'politics', 'economic', 'culture', 'digital', 'etc');") # category 만들기
