@@ -1,8 +1,8 @@
-# web_crawling
+# news_web_crawling
 
-개발언어: Python
+1. 개발언어: Python
 
-라이브러리 및 모듈
+2. 라이브러리 및 모듈
 
 -request: 파이썬으로 HTTP 호출
 
@@ -16,6 +16,6 @@
 
 -Counter: 데이터 개수 파악
 
-형태소 분석기: Mecab 은전한닢
+3. 형태소 분석기: Mecab 은전한닢
 
-DBMS: PostgreSql
+4. DBMS: PostgreSql
