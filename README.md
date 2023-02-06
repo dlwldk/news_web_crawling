@@ -1,4 +1,4 @@
-# web_crawling_ktcs
+# web_crawling
 
 개발언어: Python
 
